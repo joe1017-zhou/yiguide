@@ -240,10 +240,24 @@ export default function CastPage() {
   }, [fetchCast])
 
   const handleUnlock = useCallback(() => {
-    if (!castData?.reportId) return
+    if (!castData) return
+    // Store everything in sessionStorage so the report page can use it
+    sessionStorage.setItem("yiguide_reading", JSON.stringify({
+      question: question.trim(),
+      area,
+      subArea,
+      name: name.trim(),
+      emotion,
+      background: background.trim(),
+      quizAnswers,
+      hexagram: castData.hexagram,
+      displayLines: castData.displayLines,
+      changingLines: castData.changingLines,
+      transformedHexagram: castData.transformedHexagram,
+    }))
     setPhase("generating")
-    router.push(`/report/${castData.reportId}`)
-  }, [castData, router])
+    router.push("/report")
+  }, [castData, router, question, area, subArea, name, emotion, background, quizAnswers])
 
   const handleReset = useCallback(() => {
     setPhase("input"); setCastData(null); setErrorMessage(null)
