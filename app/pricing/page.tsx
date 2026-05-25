@@ -1,0 +1,191 @@
+import Link from "next/link"
+
+const PLANS = [
+  {
+    name: "Single Reading",
+    tagline: "Try the oracle",
+    price: "$4.99",
+    period: "one-time",
+    features: [
+      "Full 6-section AI interpretation",
+      "Hexagram analysis with line details",
+      "Personalized guidance & reflection",
+      "Beautifully formatted report",
+      "Access your reading forever",
+    ],
+    cta: "Get Started",
+    href: "/cast",
+    highlight: false,
+  },
+  {
+    name: "Monthly Unlimited",
+    tagline: "Most Popular",
+    price: "$9.99",
+    period: "/month",
+    features: [
+      "Unlimited hexagram readings",
+      "Full AI interpretation every time",
+      "Save all your readings",
+      "Revisit past guidance anytime",
+      "Priority response time",
+      "Cancel anytime",
+    ],
+    cta: "Start Free Trial",
+    href: "/cast",
+    highlight: true,
+  },
+  {
+    name: "Annual Unlimited",
+    tagline: "Best Value",
+    price: "$69",
+    period: "/year",
+    features: [
+      "Everything in Monthly Unlimited",
+      "2 months free ($5.75/mo)",
+      "Early access to new features",
+      "Download reports as PDF",
+      "Priority support",
+    ],
+    cta: "Save 42%",
+    href: "/cast",
+    highlight: false,
+  },
+]
+
+export default function PricingPage() {
+  return (
+    <div className="min-h-screen py-16 px-6">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+            Simple,{" "}
+            <span className="gold-text">Transparent</span> Pricing
+          </h1>
+          <p className="text-starlight/50 text-lg max-w-lg mx-auto">
+            Pay once to unlock a single reading, or subscribe for unlimited
+            access to the oracle&apos;s wisdom.
+          </p>
+        </div>
+
+        {/* Plans grid */}
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {PLANS.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative glass-card p-8 flex flex-col ${
+                plan.highlight ? "glow-gold border-gold/20" : ""
+              }`}
+            >
+              {plan.highlight && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="gold-gradient text-cosmic-base text-xs font-semibold px-4 py-1 rounded-full">
+                    {plan.tagline}
+                  </span>
+                </div>
+              )}
+
+              <div className="mb-6">
+                <h3 className="font-serif text-xl font-semibold text-cream mb-1">
+                  {plan.name}
+                </h3>
+                {!plan.highlight && (
+                  <p className="text-xs text-starlight/40">{plan.tagline}</p>
+                )}
+              </div>
+
+              <div className="mb-6">
+                <span className="font-serif text-4xl font-bold text-cream">
+                  {plan.price}
+                </span>
+                <span className="text-starlight/40 text-sm ml-1">
+                  {plan.period}
+                </span>
+              </div>
+
+              <ul className="space-y-3 mb-8 flex-1">
+                {plan.features.map((feature) => (
+                  <li
+                    key={feature}
+                    className="flex items-start gap-3 text-sm text-starlight/60"
+                  >
+                    <span className="text-gold mt-0.5 shrink-0">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href={plan.href}
+                className={`w-full text-center py-3 rounded-full font-semibold transition-all duration-300 ${
+                  plan.highlight
+                    ? "btn-primary"
+                    : "btn-secondary text-sm"
+                }`}
+              >
+                {plan.cta}
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        {/* FAQ */}
+        <div className="max-w-2xl mx-auto">
+          <h2 className="font-serif text-2xl font-semibold text-center mb-8">
+            Frequently Asked <span className="gold-text">Questions</span>
+          </h2>
+
+          <div className="space-y-4">
+            {[
+              {
+                q: "Is the I Ching fortune-telling?",
+                a: "No. The I Ching is a philosophical system dating back 3,000+ years. It doesn't predict the future — it illuminates patterns, offers perspective, and helps you see your situation more clearly so you can make your own decisions.",
+              },
+              {
+                q: "How are the readings generated?",
+                a: "Your hexagram is cast using a simulation of the traditional three-coin method, producing one of 64 possible hexagrams. The interpretation is generated by AI, trained to connect the I Ching's ancient wisdom to your specific question and situation.",
+              },
+              {
+                q: "Can I cancel my subscription?",
+                a: "Yes, absolutely. Cancel anytime from your account settings and your subscription will not renew. You'll retain access until the end of your current billing period.",
+              },
+              {
+                q: "Is my data private?",
+                a: "Yes. Your questions and readings are private. We don't share your data with third parties. We don't have social features. It's just you and the oracle.",
+              },
+              {
+                q: "What's the refund policy?",
+                a: "If you're not satisfied with your reading, contact us within 7 days for a full refund. We want you to feel that your reading provided genuine value.",
+              },
+            ].map((faq) => (
+              <details
+                key={faq.q}
+                className="glass-card-light group cursor-pointer"
+              >
+                <summary className="px-6 py-4 font-medium text-starlight/80 text-sm list-none flex items-center justify-between">
+                  {faq.q}
+                  <span className="text-starlight/30 group-open:rotate-45 transition-transform duration-200">
+                    +
+                  </span>
+                </summary>
+                <p className="px-6 pb-4 text-sm text-starlight/50 leading-relaxed">
+                  {faq.a}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-16">
+          <p className="text-starlight/40 text-sm mb-6">
+            Still have questions? We&apos;re here to help.
+          </p>
+          <Link href="/cast" className="btn-primary inline-block">
+            Try Your First Reading →
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
